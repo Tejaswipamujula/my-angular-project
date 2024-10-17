@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BookService } from '../book.service';
+import { BookService, Book } from '../book.service';
 
 @Component({
   selector: 'app-book-form',
@@ -7,7 +7,7 @@ import { BookService } from '../book.service';
   styleUrls: ['./book-form.component.css']
 })
 export class BookFormComponent {
-  book = {
+  book: Book = {
     title: '',
     author: ''
   };
