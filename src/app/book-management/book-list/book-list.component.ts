@@ -1,21 +1,35 @@
-// book-list/book-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { BookService, Book } from '../book.service';
 
 @Component({
   selector: 'app-book-list',
-  template: `
-    <ul>
-      <li *ngFor="let book of books">{{ book.title }}</li>
-    </ul>
-  `,
+  templateUrl: './book-list.component.html',
+  styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent implements OnInit {
   books: Book[] = [];
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
-    this.books = this.bookService.getBooks();
+    this.bookService.getBooks().subscribe(
+      (data: Book[]) => {
+        this.books = data;
+      },
+      (error) => {
+        console.error('Error fetching books:', error);
+      }
+    );
+  }
+
+  deleteBook(id: number): void {
+    this.bookService.deleteBook(id).subscribe(
+      () => {
+        this.books = this.books.filter(book => book.id !== id);
+      },
+      (error) => {
+        console.error('Error deleting book:', error);
+      }
+    );
   }
 }

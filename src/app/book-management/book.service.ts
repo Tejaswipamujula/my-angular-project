@@ -6,24 +6,16 @@ export interface Book {
   id?: number;
   title: string;
   author: string;
-}
-
-export abstract class BookServiceBase {
-  abstract addBook(book: Book): Observable<Book>;
-  abstract getBooks(): Observable<Book[]>;
-  abstract updateBook(book: Book): Observable<Book>;
-  abstract deleteBook(id: number): Observable<void>;
+  isbn: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookService extends BookServiceBase {
+export class BookService {
   private apiUrl = 'https://your-api-endpoint.com/api/books'; // Replace with your actual API endpoint
 
-  constructor(private http: HttpClient) {
-    super();
-  }
+  constructor(private http: HttpClient) { }
 
   addBook(book: Book): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);

@@ -5,11 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookFormComponent } from './book-form/book-form.component';
 import { BookManagementRoutingModule } from './book-management-routing.module';
+import { IsbnValidatorDirective } from './isbn-validator.directive';
 
 @NgModule({
   declarations: [
     BookListComponent,
-    BookFormComponent
+    BookFormComponent,
+    IsbnValidatorDirective
   ],
   imports: [
     CommonModule,

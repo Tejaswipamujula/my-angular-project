@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { BookService, Book } from '../book.service';
+import { BookFormService } from './book-form.service';
+import { Book } from '../book.service';
 
 @Component({
   selector: 'app-book-form',
@@ -9,21 +10,25 @@ import { BookService, Book } from '../book.service';
 export class BookFormComponent {
   book: Book = {
     title: '',
-    author: ''
+    author: '',
+    isbn: ''
   };
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookFormService: BookFormService) {}
 
-  onSubmit() {
-    this.bookService.addBook(this.book).subscribe(
-      response => {
-        console.log('Book submitted successfully:', response);
-        // Optionally, reset the form or provide feedback to the user
-        this.book = { title: '', author: '' };
-      },
-      error => {
-        console.error('Error submitting book:', error);
-      }
-    );
+  onSubmit(form: any) {
+    if (form.valid) {
+      this.bookFormService.submitBook(this.book).subscribe(
+        response => {
+          console.log('Book submitted successfully:', response);
+          // Optionally, reset the form or provide feedback to the user
+          this.book = { title: '', author: '', isbn: '' };
+          form.resetForm();
+        },
+        error => {
+          console.error('Error submitting book:', error);
+        }
+      );
+    }
   }
 }
